@@ -1,4 +1,4 @@
-# mich`R`
+# michR
 
 Files to accompany the Introduction to R programming lecture in MICHR's Bayesian 
 Workshop Series, Fall 2019. You can find the instructor's slides here:
