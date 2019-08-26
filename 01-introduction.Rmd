@@ -1,0 +1,198 @@
+---
+title: '1: Introduction'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+This is an R markdown notebook. The text above, the part that starts and ends 
+with '---', can be ignored for now. 
+
+When you execute code within a notebook, the results (any any results are printed)
+appear beneath the code. 
+
+Try executing the code "chunk" below, which adds the number 3 to itself, by 
+clicking the *Run* button (the green triangle in the upper right of chunk) or by 
+placing your cursor inside it and pressing *Cmd+Shift+Enter* (*Ctrl+Shift+Enter* 
+on Windows) at the same time. The output should appear immediately below the chunk. 
+
+```{r}
+3+3;
+```
+
+If you want to close the output, press the small 'x' at the top right of the panel. 
+
+Now, add a new chunk below. To do so, put your cursor where you want it to go 
+and click *Code* > *Insert Chunk* from the toolbar or  press *Cmd+Option+I* 
+(*Ctrl+Alt+I*). Type in your favorite arithmetic operation and try running the chunk. 
+
+
+`R` does not require that you end each line with a semicolon. However, adding 
+one tells `R` that you believe what you have inputted is a complete piece of code. 
+If `R` disagrees, it will tell you so by throwing an error. Therefore, my practice 
+is to use semicolons at the end of each complete line of code. 
+
+## Exercises
+
+Read the following. Follow any instructions and answer any questions by replacing the `<XXX>` with your response / answer. 
+
+### Packages 
+
+An `R` package is a collection of objects and/or function. Anyone can create and share one. Packages can either be
+
+  (i) included with standard `R` installation and automatically loaded whenever you open `R`
+  
+  (ii) included with standard `R` installation but not automatically loaded
+  
+  (iii) not included with standard `R` installation
+  
+"Installing" a package means downloading it onto your harddrive and "loading" a package means attaching a package's contents into your current session of `R`. 
+
+You only need to install a package once, but you need to load a package anytime you open `R`. 
+  
+The `tidyverse` by Hadley Wickham (winner of the 2019 COPSS award) is one of the most popular and revolutionary packages and one that we'll be using today. However, it does not come automatically installed with `R`. Run the code chunk below to install and then load the `tidyverse`. 
+
+```{r}
+if(!require(tidyverse)) {
+  install.packages("tidyverse");
+  library(tidyverse);
+}
+```
+
+Here's what the code chunk did: `!require()` checks to see if the package is already installed. If so, it loads it into your workspace. Otherwise, it will install the package and then after installation is complete load it (`require` and `library` are roughly synonymous commands). 
+
+Run the above code chunk again. What happened? Why do you think this happened?
+
+<XXX>
+
+### Data
+
+"This study tested the hypotheses that the risk of 30-day mortality associated with elective general surgery: 1) increases from morning to evening throughout the routine workday; 2) increases from Monday to Friday through the workweek; and 3) is more frequent in July and August than during other months of the year. As a presumed negative control, the investigators also evaluated mortality as a function of the phase of the moon. Secondarily, they evaluated these hypotheses as they pertain to a composite in-hospital morbidity endpoint."
+
+More information, including a link to the data dictionary, can be found here: https://www.causeweb.org/tshs/surgery-timing/
+
+
+```{r}
+surgery <- 
+  read_csv(file = "surgery_timing.csv");
+```
+
+If your data were read in, you should have received a message that starts "Parsed with column specification...". Generally speaking, what is this message telling you? 
+
+<XXX>
+
+Although all of the columns except the first have numeric values, we can tell 
+from the data dictionary that only a few are actually truly numeric. Let's 
+re-read in these data, telling `R` to treat every column as a character except
+for the ones we say otherwise:
+
+```{r}
+surgery <- 
+  read_csv(file = "surgery_timing.csv", 
+           col_types = cols(
+             #This tells R what the default value should be for each column, if unspecified
+             .default = col_character(),
+             #These are the names of the column as written in the first row of the spreadsheet:
+             age = col_double(), 
+             bmi = col_double(), 
+             mortality_rsi = col_double(), 
+             complication_rsi = col_double(), 
+             ccsMort30Rate = col_double(), 
+             ccsComplicationRate = col_double(), 
+             hour = col_double(), 
+             dow = col_integer(),
+             month = col_integer()));
+```
+
+
+If you type the name of any object, `R` will interpret that as a print command
+and print the object. In this case, typing `surgery;` will print the surgery 
+dataset we have just read in. 
+
+```{r}
+surgery;
+```
+
+
+### Plots
+
+
+Now practice making some plots of these data. Run the chunks and try to answer
+the questions. 
+
+
+```{r}
+ggplot(data = surgery) + 
+  geom_boxplot(mapping = 
+                 aes(x = mort30, 
+                     y = hour));
+```
+
+
+```{r}
+ggplot(data = surgery) + 
+  geom_smooth(mapping = 
+                 aes(x = hour, 
+                     y = as.numeric(complication)));
+```
+
+
+For the above two plots, what 'geom' function was used, and what aesthetics were provided?
+Is there anything you would change about either of the plots?
+
+<XXX>
+
+```{r}
+ggplot(data = surgery) + 
+  geom_bar(mapping = 
+               aes(x = month, 
+                   fill = complication));
+```
+
+```{r}
+ggplot(data = surgery) + 
+  geom_bar(mapping = 
+               aes(x = month, 
+                   fill = complication),
+           position = "fill");
+```
+
+What is the difference between the above two barplots? In other words, what is the
+effect of adding 'position = "fill"'?
+
+<XXX>
+
+
+## Putting it all together
+
+If you want to create a final, finished product of your work to share with your 
+partner, children, parents, grocer, or labmates, click the *Knit* button or press
+*Cmd+Shift+K* (*Ctrl+Shift+K*) to create a PDF of your entire notebook. If you
+want to create an HTML or Word file instead, click the down arrow next to *Knit* 
+and choose another option; future knits will also knit to this new format until 
+you change it again.  
+
+Another helpful tip: put your cursor anywhere in this document and press 
+*Cmd+Option+P* (*Ctrl+Alt+P* in Windows) to run all chunks above the cursor in 
+your console. 
+
+You've finished your first notebook! 
+
+You have probably realized by now that most interesting things in `R` happen 
+with functions. If you have extra time, read through the chapter from the book 
+`R for Data Science` about `R` functions:
+
+https://r4ds.had.co.nz/functions.html#function-arguments
+
+And here is a more fundamental tutorial on functions in `R` from the folks at 
+Software Carpentry (you may not have time to read through this all right now):
+
+https://swcarpentry.github.io/r-novice-inflammation/02-func-R/
+
+
+## References
+
+Wickham, Hadley and Grolemund, Garrett. *R for Data Science*. O'Reilly Media, Inc., 2017.
+https://r4ds.had.co.nz/
+

@@ -1,0 +1,94 @@
+---
+title: '2: Tidyverse verbs'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Introduction 
+
+In this notebook, you'll hone your tidyverse skills. As before, anything with an `<XXX>` requires an answer from you. 
+
+First, insert a new chunk immediately below that (i) loads the tidyverse and (ii) reads in the surgery data we've been using. 
+
+<XXX>
+
+## Interpreting code chunks 
+
+Run the following chunks. Then, using the printed output, your current knowledge of the `tidyverse`, the data dictionary, and your statistical intuition, describe what each of the following chunks does.  
+
+(I'm using the pipe operator here: `%>%`. See the link at the very bottom of this notebook for a link to a helpful page explaining how it works)
+
+```{r}
+surgery %>%
+  group_by(baseline_cancer, baseline_cvd) %>%
+  summarize(number = n(),
+            mean_mortality = mean(mort30 == "1"),
+            mean_complication = mean(complication == "1"));
+```
+
+1. <XXX>
+
+
+```{r}
+surgery %>%
+  filter(!is.na(bmi)) %>%
+  group_by(hour <= 8) %>%
+  summarize(number = n(),
+            mean_bmi = mean(bmi),
+            mean_mortality = mean(mort30 == "1"),
+            mean_complication = mean(complication == "1"));
+```
+
+2. <XXX>
+
+
+```{r}
+surgery %>%
+  filter(baseline_cvd == "1" | baseline_diabetes == "1" | baseline_pulmonary == "1") %>%
+  summarize(number = n(),
+            mean_mortality = mean(mort30 == "1"),
+            mean_complication = mean(complication == "1"));
+```
+
+3. <XXX>
+
+
+```{r}
+surgery %>%
+  mutate(complication_rsi_groups = cut(complication_rsi, breaks = quantile(complication_rsi), include.lowest = T)) %>%
+  group_by(complication_rsi_groups) %>%
+  summarize(mean_complication = mean(complication == "1"));
+```
+
+4. <XXX>
+
+Do any of the above chunks store their results as a new object? If so, what is the name of the new object? If not, what would you need to add to the chunk to save the result in a new object?
+
+5. <XXX>
+
+## Writing your own chunk
+
+Comparing those surgeries that occurred in July or August versus all other months, which group had the higher mortality rate? Complete the following chunk and use the results to answer the question. 
+
+```{r, eval = FALSE}
+#This chunk will not run until you've replaced the <XXX> below!
+#After you've done so, replace the ```{r, eval = FALSE} above with ```{r}
+surgery %>%
+  mutate(jul_aug_surgery = month %in% c(7, 8)) %>%
+  <XXX>
+```
+
+6. <XXX>
+
+
+## Putting it all together
+
+Click the *Knit* button or press *Cmd+Shift+K* (*Ctrl+Shift+K* in Windows)  to create a PDF of your entire notebook that you can share with your favorite people. If you want to create an HTML or Word file instead, click the down arrow next to *Knit* and choose another option; future knits will also knit to this new format until you change it again.  
+
+Another helpful tip: put your cursor anywhere in this document and press *Cmd+Option+P* (*Ctrl+Alt+P* in Windows) to run all chunks above the cursor in your console. 
+
+That's two notebooks completed! If you have extra time, read through this article explaining how the pipe operator, `%>%`, works and why it's recommended:
+
+https://magrittr.tidyverse.org/

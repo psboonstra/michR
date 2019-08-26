@@ -1,0 +1,17 @@
+Rat data set used in:
+   Verbeke and Lesaffre (1999), Applied Statistics, 48, 363-375
+   Verbeke and Molenberghs (2000), New-York: Springer-Verlag
+   Verbeke and Molenberghs (2003), Biometrics, 59, 254-262
+   Gelman et al (2005), Biometrics, 61, 74-85
+
+   Variables:
+      (1) obs: observation number
+      (2) treat: treament group ('con': control; 'hig': high dose; 'low': low dose)
+      (3) rat: rat identification number
+      (4) age: age of the rat at the moment the observation is made
+      (5) respons: the response measured
+
+A very brief description of the study and data set is given in the book Verbeke and Molenberghs (2000). Here is some quotes from the book. 
+"the primary aim was to investigate the effect of inhibition of the production of testosterone in male Wistar Rats on their craniofacial growth."
+“A total of 50 male Wistar rats have been randomized to either a control group or one of the two treatment groups where treatment consisted of a low or high dose of the drug Decapeptyl, which is an inhibitor for testos­terone production in rats. The treatment started at the age of 45 days, and measurements were taken every 10 days, with the first observation taken at the age of 50 days. The responses of interest are distances (in pixels) between well-defined points on X-ray pictures of the skull of each rat, taken after the rat has been anesthetized. Of primary interest is the estimation of changes over time and testing whether these changes are treatment de­pendent.”
+“For the purpose of this book, we will consider one of the measurements which can be used to characterize the height of the skull.”
