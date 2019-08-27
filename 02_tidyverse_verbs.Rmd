@@ -1,5 +1,5 @@
 ---
-title: '2: Tidyverse verbs'
+title: '2. Tidyverse verbs'
 output:
   html_document:
     df_print: paged
@@ -8,28 +8,87 @@ output:
 
 ## Introduction 
 
-In this notebook, you'll hone your tidyverse skills. As before, anything with an `<XXX>` requires an answer from you. 
+In this notebook, you'll hone your tidyverse skills by practicing the use of
+some verbs. As before, anything with an `<XXX>` requires an answer from you. 
 
-First, insert a new chunk immediately below that (i) loads the tidyverse and (ii) reads in the surgery data we've been using. 
-
-<XXX>
-
-## Interpreting code chunks 
-
-Run the following chunks. Then, using the printed output, your current knowledge of the `tidyverse`, the data dictionary, and your statistical intuition, describe what each of the following chunks does.  
-
-(I'm using the pipe operator here: `%>%`. See the link at the very bottom of this notebook for a link to a helpful page explaining how it works)
+First, run the chunk immediately below that to load the tidyverse and read in 
+the surgery data we've been using:
 
 ```{r}
-surgery %>%
+if(!require(tidyverse)) {
+  install.packages("tidyverse");
+  library(tidyverse);
+}
+surgery <- 
+  read_csv(file = "surgery_timing.subset.csv", 
+           col_types = cols(
+             #This tells R what the default value 
+             #should be for each column, if unspecified
+             .default = col_character(),
+             #These are the names of the column as written 
+             #in the first row of the spreadsheet:
+             age = col_double(), 
+             bmi = col_double(), 
+             mortality_rsi = col_double(), 
+             complication_rsi = col_double(), 
+             ccsMort30Rate = col_double(), 
+             ccsComplicationRate = col_double(), 
+             hour = col_double(), 
+             dow = col_integer(),
+             month = col_integer()));
+```
+
+## Demonstration of the verbs
+
+I'll be using the pipe operator, `%>%`, in this document. This is useful when 
+iterating functions. For example, instead of `f(g(h(x)))`, I can use the `%>%`
+to write: `x %>% h() %>% g() %>% f()`. In words, take `x`, pass it as an 
+argument of `f()`, pass its result as an argument to `g()`, and finally pass its
+result as an argument to `h()`. At the cost of more whitespace used, I 
+can more clearly communicate what operations are being conducted, and in what
+order. The link at the very bottom of this notebook points to a helpful page 
+explaining in more detail how it works.
+
+Here is what a typical usecase of the `tidyverse` verbs:
+
+```{r}
+surgery %>% 
   group_by(baseline_cancer, baseline_cvd) %>%
   summarize(number = n(),
             mean_mortality = mean(mort30 == "1"),
             mean_complication = mean(complication == "1"));
 ```
 
-1. <XXX>
+In words, I'm taking the `surgery` object, telling `R` to create groups based on
+all possible combinations of `baseline_cancer` and `baseline_cvd`, and then, 
+within each of those groups, (i) count the number of rows, (ii) count the 
+proportion of observations in which the patient died, and (iii) count the 
+proportion of observations in which a complication occurred. The mean 
+calculations are slightly strange-looking because I have read in the variables
+`mort30` and `complication` as character variables and not integers. Thus, I 
+am literally counting the proportion of rows in which the variable `mort30` 
+equals the character value '1'. 
 
+The following code chunk is identical to the one above but does not use the 
+pipe operator `%>%`. 
+
+```{r}
+summarize(group_by(surgery, 
+                   baseline_cancer, 
+                   baseline_cvd), 
+          number = n(),
+          mean_mortality = mean(mort30 == "1"),
+          mean_complication = mean(complication == "1"));
+```
+
+It is more complicated to read (or at least that is the argument in favor of 
+using `%>%` instead).
+
+## Your turn: interpreting some results
+
+Run the following chunks. Then, using the printed output, your current knowledge
+of the `tidyverse`, the data dictionary, and your statistical intuition, 
+describe what each of the following chunks does.  
 
 ```{r}
 surgery %>%
@@ -41,36 +100,51 @@ surgery %>%
             mean_complication = mean(complication == "1"));
 ```
 
-2. <XXX>
+1. <XXX>
 
 
 ```{r}
 surgery %>%
-  filter(baseline_cvd == "1" | baseline_diabetes == "1" | baseline_pulmonary == "1") %>%
+  filter(baseline_cvd == "1" | 
+           baseline_diabetes == "1" |
+           baseline_pulmonary == "1") %>%
   summarize(number = n(),
             mean_mortality = mean(mort30 == "1"),
             mean_complication = mean(complication == "1"));
 ```
 
-3. <XXX>
+2. <XXX>
 
 
 ```{r}
 surgery %>%
-  mutate(complication_rsi_groups = cut(complication_rsi, breaks = quantile(complication_rsi), include.lowest = T)) %>%
+  mutate(complication_rsi_groups = cut(complication_rsi, 
+                                       breaks = quantile(complication_rsi), 
+                                       include.lowest = T)) %>%
   group_by(complication_rsi_groups) %>%
   summarize(mean_complication = mean(complication == "1"));
 ```
 
+3. <XXX>
+
+```{r}
+surgery <- 
+  surgery %>%
+  mutate(complication_numeric = as.numeric(complication)); 
+surgery;
+```
+
 4. <XXX>
 
-Do any of the above chunks store their results as a new object? If so, what is the name of the new object? If not, what would you need to add to the chunk to save the result in a new object?
+Do any of the above chunks store their results as a new object?
 
 5. <XXX>
 
 ## Writing your own chunk
 
-Comparing those surgeries that occurred in July or August versus all other months, which group had the higher mortality rate? Complete the following chunk and use the results to answer the question. 
+Comparing those surgeries that occurred in July or August versus all other 
+months, which group had the higher mortality rate? Complete the following chunk
+and use the results to answer the question. 
 
 ```{r, eval = FALSE}
 #This chunk will not run until you've replaced the <XXX> below!
@@ -85,10 +159,16 @@ surgery %>%
 
 ## Putting it all together
 
-Click the *Knit* button or press *Cmd+Shift+K* (*Ctrl+Shift+K* in Windows)  to create a PDF of your entire notebook that you can share with your favorite people. If you want to create an HTML or Word file instead, click the down arrow next to *Knit* and choose another option; future knits will also knit to this new format until you change it again.  
+Click the *Knit* button or press *Cmd+Shift+K* (*Ctrl+Shift+K* in Windows)
+to create a HTML of your entire notebook that you can share with your favorite 
+people.
 
-Another helpful tip: put your cursor anywhere in this document and press *Cmd+Option+P* (*Ctrl+Alt+P* in Windows) to run all chunks above the cursor in your console. 
+That's two notebooks completed! Please indicate as such via the polleverywhere
+poll on the screen. 
 
-That's two notebooks completed! If you have extra time, read through this article explaining how the pipe operator, `%>%`, works and why it's recommended:
+## Further reading (if you have time remaining)
+
+Read through this article explaining how the pipe operator, `%>%`, works,
+and why it's recommended:
 
 https://magrittr.tidyverse.org/

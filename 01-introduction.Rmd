@@ -1,57 +1,83 @@
 ---
-title: '1: Introduction'
+title: '1. Introduction'
 output:
   html_document:
     df_print: paged
   pdf_document: default
 ---
 
-This is an R markdown notebook. The text above, the part that starts and ends 
-with '---', can be ignored for now. 
+This is an `R` markdown notebook, which is a package that comes with RStudio. 
+The text above, the part that starts and ends with '---', denotes the front 
+matter of your document and can be ignored for now. 
 
-When you execute code within a notebook, the results (any any results are printed)
-appear beneath the code. 
+The distinguishing feature of these notebooks is that they contain a mix of 
+plain text and `R` code. You can also include LaTex-like code like this: $3+3=6$.
+I have dressed up some of my text (with backticks, asterisks, etc.) which changes
+the color of some of the text. You will see what effect this has at the end of
+this notebook. 
 
-Try executing the code "chunk" below, which adds the number 3 to itself, by 
-clicking the *Run* button (the green triangle in the upper right of chunk) or by 
-placing your cursor inside it and pressing *Cmd+Shift+Enter* (*Ctrl+Shift+Enter* 
-on Windows) at the same time. The output should appear immediately below the chunk. 
+In a notebook, `R` code lives in "code chunks". See lines 26--28 for an example 
+of a code chunk. Try executing this code chunk, which adds the number 3 to 
+itself, by clicking the *Run* button (the green triangle in the upper right 
+of chunk) or by placing your cursor inside it and pressing *Cmd+Shift+Enter*
+(*Ctrl+Shift+Enter* on Windows) at the same time. The output should appear
+immediately below the chunk as well as in the `R` console. 
 
 ```{r}
 3+3;
 ```
 
-If you want to close the output, press the small 'x' at the top right of the panel. 
+If you want to close the output, press the small 'x' at the top right of the 
+panel. 
 
-Now, add a new chunk below. To do so, put your cursor where you want it to go 
-and click *Code* > *Insert Chunk* from the toolbar or  press *Cmd+Option+I* 
-(*Ctrl+Alt+I*). Type in your favorite arithmetic operation and try running the chunk. 
+Now, add a new chunk below. To do so, put your cursor on line 38 and click 
+*Code* > *Insert Chunk* from the toolbar or  press *Cmd+Option+I* 
+(*Ctrl+Alt+I*). Type in your favorite arithmetic operation inside the chunk 
+and try running the chunk. 
 
 
-`R` does not require that you end each line with a semicolon. However, adding 
-one tells `R` that you believe what you have inputted is a complete piece of code. 
-If `R` disagrees, it will tell you so by throwing an error. Therefore, my practice 
-is to use semicolons at the end of each complete line of code. 
+
+**Remark 1** `R` does not require that you end each line with a semicolon. 
+However, adding one tells `R` that you believe what you have inputted is a
+complete piece of code. If `R` disagrees, it will tell you so by throwing an 
+error. Therefore, my practice is to use semicolons at the end of each complete 
+line of code. 
+
+**Remark 2** I use `R` and `R`Studio interchangeably, because I only ever use 
+`R` via `R`Studio. `R`Studio sits "on top" of `R` and makes it easier to use, but
+all of the actuall statistical work is done by `R`. 
+
 
 ## Exercises
 
-Read the following. Follow any instructions and answer any questions by replacing the `<XXX>` with your response / answer. 
+Read the following. Follow any instructions and answer any questions by 
+replacing the `<XXX>` with your response / answer. 
 
 ### Packages 
 
-An `R` package is a collection of objects and/or function. Anyone can create and share one. Packages can either be
+An `R` package is a collection of objects and/or function. Anyone can create 
+and share one. All packages fall in one of the following categories:
 
-  (i) included with standard `R` installation and automatically loaded whenever you open `R`
+  (i) installed when you installed `R` and automatically loaded whenever you 
+  open `R`Studio
   
-  (ii) included with standard `R` installation but not automatically loaded
+  (ii) included with standard `R` installation but requires that you manually
+  load the package each time you open a new session of `R`Studio
   
-  (iii) not included with standard `R` installation
+  (iii) not included with standard `R` installation and must be installed (and
+  loaded in each new session) before you can use it
   
-"Installing" a package means downloading it onto your harddrive and "loading" a package means attaching a package's contents into your current session of `R`. 
+"Installing" a package means downloading it onto your harddrive and "loading" 
+a package means attaching a package's contents into your current session of `R`. 
 
-You only need to install a package once, but you need to load a package anytime you open `R`. 
+You only need to install a package once, but you need to load a package anytime 
+you open `R`. 
   
-The `tidyverse` by Hadley Wickham (winner of the 2019 COPSS award) is one of the most popular and revolutionary packages and one that we'll be using today. However, it does not come automatically installed with `R`. Run the code chunk below to install and then load the `tidyverse`. 
+The `tidyverse` by Hadley Wickham (winner of the 2019 COPSS award) is one of 
+the most popular and revolutionary packages and one that we'll be using today. 
+However, it does not come automatically installed with `R`. Run the code chunk 
+below to install and then load the `tidyverse` (it may take a minute or two
+to download everything). 
 
 ```{r}
 if(!require(tidyverse)) {
@@ -60,7 +86,10 @@ if(!require(tidyverse)) {
 }
 ```
 
-Here's what the code chunk did: `!require()` checks to see if the package is already installed. If so, it loads it into your workspace. Otherwise, it will install the package and then after installation is complete load it (`require` and `library` are roughly synonymous commands). 
+Here's what the code chunk did: `!require()` checks to see if the package is 
+already installed. If so, it loads it into your workspace. Otherwise, it will 
+install the package and then after installation is complete load it (`require` 
+and `library` are roughly synonymous commands). 
 
 Run the above code chunk again. What happened? Why do you think this happened?
 
@@ -68,17 +97,25 @@ Run the above code chunk again. What happened? Why do you think this happened?
 
 ### Data
 
-"This study tested the hypotheses that the risk of 30-day mortality associated with elective general surgery: 1) increases from morning to evening throughout the routine workday; 2) increases from Monday to Friday through the workweek; and 3) is more frequent in July and August than during other months of the year. As a presumed negative control, the investigators also evaluated mortality as a function of the phase of the moon. Secondarily, they evaluated these hypotheses as they pertain to a composite in-hospital morbidity endpoint."
+"This study tested the hypotheses that the risk of 30-day mortality associated 
+with elective general surgery: 1) increases from morning to evening throughout 
+the routine workday; 2) increases from Monday to Friday through the workweek; 
+and 3) is more frequent in July and August than during other months of the year.
+As a presumed negative control, the investigators also evaluated mortality as a 
+function of the phase of the moon. Secondarily, they evaluated these hypotheses 
+as they pertain to a composite in-hospital morbidity endpoint."
 
-More information, including a link to the data dictionary, can be found here: https://www.causeweb.org/tshs/surgery-timing/
+More information, including a link to the data dictionary, can be found here: https://www.causeweb.org/tshs/surgery-timing/. It will be helpful to have the data dictionary pulled in a browser tab for reference.  
 
 
 ```{r}
 surgery <- 
-  read_csv(file = "surgery_timing.csv");
+  read_csv(file = "surgery_timing_subset.csv");
 ```
 
-If your data were read in, you should have received a message that starts "Parsed with column specification...". Generally speaking, what is this message telling you? 
+If your data were read in, you should have received a message that starts 
+"Parsed with column specification...". Generally speaking, what is this message 
+telling you? 
 
 <XXX>
 
@@ -89,11 +126,14 @@ for the ones we say otherwise:
 
 ```{r}
 surgery <- 
-  read_csv(file = "surgery_timing.csv", 
+  read_csv(file = "surgery_timing_subset.csv", 
            col_types = cols(
-             #This tells R what the default value should be for each column, if unspecified
+             #This tells R what the default value 
+             #should be for each column, if unspecified
              .default = col_character(),
-             #These are the names of the column as written in the first row of the spreadsheet:
+             #These are the names of the column as written 
+             #in the first row of the spreadsheet (or the 
+             #second column of the data dictionary):
              age = col_double(), 
              bmi = col_double(), 
              mortality_rsi = col_double(), 
@@ -167,21 +207,31 @@ effect of adding 'position = "fill"'?
 ## Putting it all together
 
 If you want to create a final, finished product of your work to share with your 
-partner, children, parents, grocer, or labmates, click the *Knit* button or press
-*Cmd+Shift+K* (*Ctrl+Shift+K*) to create a PDF of your entire notebook. If you
-want to create an HTML or Word file instead, click the down arrow next to *Knit* 
-and choose another option; future knits will also knit to this new format until 
-you change it again.  
+partner, children, parents, or grocer, click the *Knit* button or press
+*Cmd+Shift+K* (*Ctrl+Shift+K*) to create an HTML file of your entire notebook. 
+
+You should see now the effect of dressing up the text: use *asterisks* for
+*italic text*, **double asterisks** for **bold text**, and `single back ticks` 
+for `pseudo code`.
+
+If you want to create an PDF or Word file instead, click the down arrow next to 
+*Knit* and choose another option; future knits will also knit to this new format
+until you change it again. Knitting to PDF may not work if this is your own 
+computer and you have never used the LaTeX engine before. Similarly, knitting to 
+Word may not work if you do not have Word installed on your computer. 
 
 Another helpful tip: put your cursor anywhere in this document and press 
 *Cmd+Option+P* (*Ctrl+Alt+P* in Windows) to run all chunks above the cursor in 
 your console. 
 
-You've finished your first notebook! 
+You've finished your first notebook! Please indicate as such via the 
+polleverywhere poll on the screen. 
+
+## Further reading (if you have time remaining)
 
 You have probably realized by now that most interesting things in `R` happen 
-with functions. If you have extra time, read through the chapter from the book 
-`R for Data Science` about `R` functions:
+with functions. Read through the chapter from the book 
+'R for Data Science' about `R` functions:
 
 https://r4ds.had.co.nz/functions.html#function-arguments
 
@@ -193,6 +243,6 @@ https://swcarpentry.github.io/r-novice-inflammation/02-func-R/
 
 ## References
 
-Wickham, Hadley and Grolemund, Garrett. *R for Data Science*. O'Reilly Media, Inc., 2017.
-https://r4ds.had.co.nz/
+Wickham, Hadley and Grolemund, Garrett. *R for Data Science*. O'Reilly Media, 
+Inc., 2017. https://r4ds.had.co.nz/
 

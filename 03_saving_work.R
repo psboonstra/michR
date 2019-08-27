@@ -1,18 +1,19 @@
 
-# This is what an R script looks like. I'm writing a little bit of background
-# using the comment character "#". Text is highlighted differently than in an 
-# .Rmd file. To me, the way that the text is colored in an R script draws my eyes 
-# immediately to the R code, whereas in an Rmd file both prose and code are 
-# highlighted similarly.
+# This is what an old-fashioned R script looks like. I'm writing a little bit 
+# of background using the comment character "#". Text is highlighted differently 
+# than in an .Rmd file. On my computer, the way that the text is colored in an 
+# R script draws my eyes immediately to the R code (below), whereas in an Rmd file 
+# both prose and code are highlighted similarly.
   
 # Let's practice working in an R script and saving our output using the rat data
 # that was introducted at the beginning of today. 
 
-# 1. First load the data. This will be a slightly different process than running
-# a code chunk in a notebook. To run a line of code in an R script, put your cursor
-# on the line of code that you want to run, then press *Cmd+Enter* (*Ctrl+Enter* 
-# on Windows). This will run the line of code *and* move your cursor down to the 
-# next line of code. Run both lines of code:
+# 1. First load the data with the following instructions. This will be a 
+# slightly different process than running a code chunk in a notebook. To run 
+# a line of code in an R script, put your cursor on the line of code that you 
+# want to run, then press *Cmd+Enter* (*Ctrl+Enter* on Windows). This will run 
+# the line of code *and* move your cursor down to the next line of code. 
+# Run the following two commands; you will need to press *Cmd+Enter* twice. 
 
 library(tidyverse);
 rat_data <- read_csv("rats.csv",
@@ -73,32 +74,34 @@ write_csv(x = rat_data, path = "rat_data_new.csv");
 #' still work. 
 #' 
 #' Notice that instead of " # " at the beginning of each line, 
-#' I'm now using " #' " (starting at line 65). R does not care about this 
+#' I'm now using " #' " (starting at line 68). R does not care about this 
 #' difference, because both look like comments to it. But when you *knit* the
 #' document, these lines will be formatted like text. In your knitted documnet, 
 #' compare the look and style of the comments at the beginning to the these 
-#' formatted comments. 
+#' formatted comments. You can also see that Rstudio has started highlighting
+#' the "dressed up" text now that I'm using #' instead of #. 
 #' 
 #' Finally, you can add a title, author, and date to your knitted R script, just
 #' like a notebook. Fill in the empty strings here:
 #' 
 #'  
 #' ---
-#' title: "3: Saving your work"
+#' title: "3. Saving your work"
 #' author: ""
 #' date: ""
 #' ---
 #' 
-#' If you have finished everything and have some time remaining, read the following
-#' articles by Jenny Bryan:
+#' If you have finished everything, congratulations! Please indicate as such 
+#' via the polleverywhere poll on the screen. If you have time remaining, read
+#' through the following articles by Jenny Bryan:
 #' 
 #' 
-#' Render an R script
+#' Rendering an R script
 #' 
 #' https://happygitwithr.com/r-test-drive.html
 #' 
 #' 
-#  Project-oriented workflow in `R`:
+#  Project-oriented workflow in R:
 #'  
 #' https://www.tidyverse.org/articles/2017/12/workflow-vs-script/
 #'  
