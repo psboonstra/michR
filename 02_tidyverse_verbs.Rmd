@@ -20,7 +20,7 @@ if(!require(tidyverse)) {
   library(tidyverse);
 }
 surgery <- 
-  read_csv(file = "surgery_timing.subset.csv", 
+  read_csv(file = "surgery_timing_subset.csv", 
            col_types = cols(
              #This tells R what the default value 
              #should be for each column, if unspecified
@@ -38,16 +38,34 @@ surgery <-
              month = col_integer()));
 ```
 
-## Demonstration of the verbs
+### `%>%`
 
 I'll be using the pipe operator, `%>%`, in this document. This is useful when 
 iterating functions. For example, instead of `f(g(h(x)))`, I can use the `%>%`
 to write: `x %>% h() %>% g() %>% f()`. In words, take `x`, pass it as an 
-argument of `f()`, pass its result as an argument to `g()`, and finally pass its
-result as an argument to `h()`. At the cost of more whitespace used, I 
-can more clearly communicate what operations are being conducted, and in what
-order. The link at the very bottom of this notebook points to a helpful page 
-explaining in more detail how it works.
+argument of `h()`, pass its result, i.e. `h(x)`, as an argument to `g()`, and 
+finally pass *its* result, i.e. `g(h(x))`, as an argument to `f()`. 
+At the cost of more whitespace used, I can more clearly communicate what 
+operations are being conducted, and in what order. The link at the very bottom 
+of this notebook points to a helpful page explaining in more detail how it works.
+
+**Remark 1** In a weird quirk of chronology (`ggplot` predates `%>%`), a big 
+exception is that the pipe operator does not work with the `ggplot` family of
+functions.In other words, you must use:
+
+```{r, eval = FALSE}
+# Use this
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>));
+```
+
+```{r, eval = FALSE}
+# Don't use this (it won't work)
+ggplot(data = <DATA>) %>%
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>));
+```
+
+## Demonstration of the verbs
 
 Here is what a typical usecase of the `tidyverse` verbs:
 
