@@ -93,7 +93,7 @@ and `library` are roughly synonymous commands).
 
 Run the above code chunk again. What happened? Why do you think this happened?
 
-<XXX>
+`<XXX>`
 
 ### Data
 
@@ -107,6 +107,9 @@ as they pertain to a composite in-hospital morbidity endpoint."
 
 More information, including a link to the data dictionary, can be found here: https://www.causeweb.org/tshs/surgery-timing/. It will be helpful to have the data dictionary pulled in a browser tab for reference.  
 
+The full data has ~32K observations. For expediency, I have provided a random
+sample of 2.5K observations in the file "surgery_timing_subset.csv". 
+
 
 ```{r}
 surgery <- 
@@ -117,7 +120,7 @@ If your data were read in, you should have received a message that starts
 "Parsed with column specification...". Generally speaking, what is this message 
 telling you? 
 
-<XXX>
+`<XXX>`
 
 Although all of the columns except the first have numeric values, we can tell 
 from the data dictionary that only a few are actually truly numeric. Let's 
@@ -181,7 +184,7 @@ ggplot(data = surgery) +
 For the above two plots, what 'geom' function was used, and what aesthetics were provided?
 Is there anything you would change about either of the plots?
 
-<XXX>
+`<XXX>`
 
 ```{r}
 ggplot(data = surgery) + 
@@ -201,7 +204,7 @@ ggplot(data = surgery) +
 What is the difference between the above two barplots? In other words, what is the
 effect of adding 'position = "fill"'?
 
-<XXX>
+`<XXX>`
 
 
 ## Putting it all together
